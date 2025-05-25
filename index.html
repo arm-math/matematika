@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hy">
+
 <head>
     <meta charset="UTF-8" />
     <title>Հարցերի Անիվ - Մաթեմատիկայի Խաղ</title>
@@ -9,6 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
@@ -22,6 +24,7 @@
             overflow-x: hidden;
             position: relative;
         }
+
         h1 {
             margin-bottom: 25px;
             font-size: 3.4rem;
@@ -33,23 +36,42 @@
             background-clip: text;
             color: transparent;
         }
+
         @keyframes slideIn {
             from {
                 transform: translateY(-40px) scale(0.95);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0) scale(1);
                 opacity: 1;
             }
         }
+
+        @keyframes pulse-glow {
+            from {
+                box-shadow: 0 0 15px rgba(142, 68, 173, 0.4), 0 0 25px rgba(44, 62, 80, 0.2);
+            }
+
+            to {
+                box-shadow: 0 0 25px rgba(142, 68, 173, 0.8), 0 0 40px rgba(44, 62, 80, 0.4);
+            }
+        }
+
+
         .menu {
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 15px;
             margin-bottom: 30px;
             flex-wrap: wrap;
             animation: fadeIn 1s ease-out 0.3s both;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
         }
+
         .menu button {
             padding: 15px 35px;
             font-size: 1.25rem;
@@ -63,7 +85,24 @@
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
+
+        .menu button.secondary {
+            background: radial-gradient(circle at top left, #8e44ad, #2c3e50);
+            box-shadow: 0 0 15px rgba(142, 68, 173, 0.6), 0 0 30px rgba(44, 62, 80, 0.3);
+            animation: pulse-glow 2s infinite alternate;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+
+
+        .menu button.secondary:hover:not(:disabled) {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 0 30px rgba(142, 68, 173, 0.9), 0 0 40px rgba(44, 62, 80, 0.4);
+        }
+
+
         .menu button::before {
             content: '';
             position: absolute;
@@ -71,22 +110,25 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: 0.5s;
         }
+
         .menu button:hover:not(:disabled) {
-            transform: scale(1.07) rotate(-1.5deg);
-            background: linear-gradient(45deg, #079992, #38ada9);
+            transform: scale(1.03) rotate(-1deg);
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
         }
+
         .menu button:hover::before {
             left: 100%;
         }
+
         .menu button:disabled {
             opacity: 0.4;
             cursor: not-allowed;
             box-shadow: none;
         }
+
         .game-container {
             display: none;
             flex-direction: column;
@@ -95,44 +137,110 @@
             width: 100%;
             max-width: 600px;
         }
+
+        .millionaire-game {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            background: radial-gradient(circle at center, #1a1a2e, #0f3460);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3), 0 0 70px rgba(0, 204, 255, 0.2);
+            border: 2px solid rgba(0, 204, 255, 0.4);
+            position: relative;
+            animation: fadeInGlow 0.5s ease forwards;
+
+        }
+
+        .math-background::before {
+            content: '∑ ∆ √ π ∫ ∞ ÷ × − + ≠ ≈ ∈ ∉ ∩ ∪';
+            position: absolute;
+            font-size: 110px;
+            opacity: 0.04;
+            top: 5%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            animation: scrollMath 40s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes scrollMath {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes fadeInGlow {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+                filter: blur(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+
+
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .wheel-container {
             position: relative;
             animation: scaleIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
             margin-bottom: 20px;
         }
+
         @keyframes scaleIn {
             0% {
                 transform: scale(0.65) rotate(15deg);
                 opacity: 0;
             }
+
             100% {
                 transform: scale(1) rotate(0);
                 opacity: 1;
             }
         }
+
         canvas {
             border: 14px solid #fff;
             border-radius: 50%;
             background-color: #fdfdfd;
-            box-shadow: 
+            box-shadow:
                 0 0 30px rgba(0, 0, 0, 0.25),
                 0 10px 30px rgba(0, 0, 0, 0.1);
             user-select: none;
             transition: transform 0.3s ease;
         }
+
         canvas:hover {
             transform: scale(1.02);
         }
+
         .pointer {
             width: 0;
             height: 0;
@@ -148,16 +256,19 @@
             filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
             animation: pulse 1.5s infinite alternate;
         }
+
         @keyframes pulse {
             from {
                 transform: rotate(180deg) scale(1);
                 filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
             }
+
             to {
                 transform: rotate(180deg) scale(1.1);
                 filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
             }
         }
+
         #spin {
             margin-top: 35px;
             padding: 18px 50px;
@@ -175,6 +286,7 @@
             overflow: hidden;
             z-index: 1;
         }
+
         #spin::after {
             content: '';
             position: absolute;
@@ -187,19 +299,23 @@
             transition: opacity 0.3s ease;
             z-index: -1;
         }
+
         #spin:hover:not(:disabled) {
             transform: scale(1.07) rotate(1.5deg);
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
         }
+
         #spin:hover::after {
             opacity: 1;
         }
+
         #spin:disabled {
             cursor: not-allowed;
             opacity: 0.5;
             box-shadow: none;
             transform: none;
         }
+
         #result {
             margin-top: 35px;
             font-size: 24px;
@@ -218,6 +334,7 @@
             position: relative;
             overflow: hidden;
         }
+
         #result::before {
             content: '';
             position: absolute;
@@ -228,6 +345,7 @@
             background: linear-gradient(45deg, transparent, rgba(38, 166, 154, 0.1), transparent);
             z-index: 0;
         }
+
         .controls {
             margin-top: 30px;
             display: flex;
@@ -237,6 +355,7 @@
             width: 100%;
             max-width: 600px;
         }
+
         .controls button {
             flex: 1 1 180px;
             padding: 14px 25px;
@@ -253,20 +372,25 @@
             position: relative;
             overflow: hidden;
         }
+
         #btn-add {
             background: linear-gradient(45deg, #3498db, #2ecc71);
         }
+
         #btn-add:hover {
             background: linear-gradient(45deg, #2980b9, #27ae60);
             transform: translateY(-2px);
         }
+
         #btn-edit {
             background: linear-gradient(45deg, #9b59b6, #e74c3c);
         }
+
         #btn-edit:hover {
             background: linear-gradient(45deg, #8e44ad, #c0392b);
             transform: translateY(-2px);
         }
+
         .math-symbols {
             position: fixed;
             top: 0;
@@ -276,6 +400,7 @@
             pointer-events: none;
             z-index: -1;
         }
+
         .math-symbol {
             position: absolute;
             font-size: 24px;
@@ -283,24 +408,213 @@
             animation: float 15s infinite linear;
             opacity: 0;
             font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         @keyframes float {
             0% {
                 transform: translateY(100vh) rotate(0deg) scale(0.5);
                 opacity: 0;
             }
+
             10% {
                 opacity: 0.7;
             }
+
             90% {
                 opacity: 0.7;
             }
+
             100% {
                 transform: translateY(-100px) rotate(360deg) scale(1.2);
                 opacity: 0;
             }
         }
+
+        /* Millionaire game styles */
+        .millionaire-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .level-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 0 10px #00ffffaa;
+        }
+
+
+
+        .score-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .millionaire-question {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 153, 255, 0.4);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            padding: 15px 20px;
+            background: linear-gradient(45deg, #003366, #004080);
+            color: #00ffff;
+            border: 2px solid #00ffff88;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            padding-left: 50px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+        }
+
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .option-letter {
+            position: absolute;
+            left: 15px;
+            font-weight: bold;
+        }
+
+        .millionaire-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .millionaire-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            margin: 5px;
+        }
+
+        .next-btn {
+            background: linear-gradient(to right, #0066cc, #003366);
+            color: #00ffff;
+            font-weight: bold;
+            display: none;
+            border-radius: 16px;
+            padding: 14px 20px;
+            border: 2px solid #00ffff88;
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover {
+            background: linear-gradient(to right, #0088ff, #004080);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 204, 255, 0.5);
+        }
+
+
+        .quit-btn {
+            background: radial-gradient(circle at center, #990000, #330000);
+            color: #ff9999;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: 18px;
+            border: 2px solid #ff5555;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .quit-btn:hover {
+            background: radial-gradient(circle at center, #cc0000, #440000);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+        }
+
+
+        .restart-btn {
+            background: linear-gradient(45deg, #ff8c00, #cc7000);
+            color: #fff0d0;
+            display: none;
+            font-weight: bold;
+            padding: 14px 20px;
+            border-radius: 16px;
+            border: 2px solid #ffaa33aa;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: linear-gradient(45deg, #ffa500, #cc8400);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 165, 0, 0.5);
+        }
+
+
+        .levels-progress {
+            width: 100%;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -315,16 +629,19 @@
             z-index: 1100;
             animation: fadeInModal 0.3s ease forwards;
         }
+
         @keyframes fadeInModal {
             from {
                 opacity: 0;
                 backdrop-filter: blur(0);
             }
+
             to {
                 opacity: 1;
                 backdrop-filter: blur(5px);
             }
         }
+
         .modal .modal-content {
             background: #fff;
             padding: 28px 35px;
@@ -339,11 +656,13 @@
             position: relative;
             overflow: hidden;
         }
+
         @keyframes modalSlideIn {
             to {
                 transform: translateY(0);
             }
         }
+
         .modal .modal-content::before {
             content: '';
             position: absolute;
@@ -353,6 +672,7 @@
             height: 8px;
             background: linear-gradient(90deg, #38ada9, #78e08f);
         }
+
         .modal h2 {
             margin-bottom: 20px;
             color: #2c3e50;
@@ -360,6 +680,7 @@
             font-size: 1.6rem;
             text-align: center;
         }
+
         .modal select,
         .modal input {
             padding: 12px 15px;
@@ -371,18 +692,21 @@
             outline-color: #38ada9;
             transition: all 0.35s ease;
         }
+
         .modal select:focus,
         .modal input:focus {
             border-color: #38ada9;
             box-shadow: 0 0 8px #38ada9aa;
             transform: translateY(-2px);
         }
+
         .modal .modal-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
             gap: 12px;
         }
+
         .modal button {
             flex: 1;
             padding: 12px 16px;
@@ -396,40 +720,70 @@
             user-select: none;
             white-space: nowrap;
         }
+
         .delete-btn {
             background: linear-gradient(45deg, #e74c3c, #c0392b);
         }
+
         .delete-btn:hover {
             background: linear-gradient(45deg, #c0392b, #e74c3c);
             transform: translateY(-2px);
         }
+
         .save-btn {
             background: linear-gradient(45deg, #27ae60, #1e8449);
         }
+
         .save-btn:hover {
             background: linear-gradient(45deg, #1e8449, #27ae60);
             transform: translateY(-2px);
         }
+
         .close-btn {
             background: linear-gradient(45deg, #7f8c8d, #707b7c);
         }
+
         .close-btn:hover {
             background: linear-gradient(45deg, #707b7c, #7f8c8d);
             transform: translateY(-2px);
         }
+
         /* Scrollbar for select dropdown */
         #questionSelect {
             max-height: 130px;
             overflow-y: auto;
         }
+
+        /* Millionaire edit modal */
+        .option-input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 30px;
+        }
+
+        .option-input {
+            flex: 1;
+        }
+
+        .correct-option {
+            margin-top: 10px;
+        }
     </style>
 </head>
+
 <body>
     <div class="math-symbols" id="mathSymbols"></div>
-    
+
     <h1>Մաթեմատիկայի Անիվ</h1>
     <div class="menu">
         <button onclick="startGame()">Հարցերի Անիվ</button>
+        <button class="secondary" onclick="startMillionaireGame()">Ով է ուզում դառնալ գերազանցիկ</button>
     </div>
     <div class="game-container" id="game">
         <div class="wheel-container">
@@ -443,13 +797,40 @@
         </div>
         <div id="result"></div>
     </div>
-    
+
+    <!-- Millionaire Game Container -->
+    <div class="millionaire-game math-background" id="millionaireGame">
+        <div class="millionaire-container">
+            <div class="levels-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="level-display" id="levelDisplay">Մակարդակ 1</div>
+            <div class="score-display" id="scoreDisplay">0 միավոր</div>
+            <div class="millionaire-question" id="millionaireQuestion"></div>
+            <div class="options-container" id="optionsContainer"></div>
+            <div class="millionaire-controls">
+                <button class="quit-btn" onclick="quitMillionaireGame()">
+                    <span style="margin-right: 8px;">🚪</span>
+                    <span style="font-weight: 600;">Դուրս գալ</span>
+                </button>
+                <button class="next-btn" id="nextLevelBtn" onclick="nextLevel()">Հաջորդ մակարդակ</button>
+                <button class="restart-btn" id="restartBtn" onclick="restartGame()">Նորից սկսել</button>
+                <button class="millionaire-btn" id="millionaireAddBtn" onclick="openAddMillionaireModal()">➕ Ավելացնել
+                    Հարց</button>
+                <button class="millionaire-btn" id="millionaireEditBtn" onclick="openEditMillionaireModal()">✏️ Խմբագրել
+                    / Ջնջել Հարց</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal for Edit/Delete -->
-    <div id="editModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div id="editModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="editModalTitle">
         <div class="modal-content" role="document">
             <h2 id="editModalTitle">Խմբագրել / Ջնջել Հարց</h2>
             <select id="questionSelect" aria-label="Ընտրել հարց"></select>
-            <input id="editQuestionInput" type="text" placeholder="Հարց" aria-label="Խմբագրել հարցը" autocomplete="off" />
+            <input id="editQuestionInput" type="text" placeholder="Հարց" aria-label="Խմբագրել հարցը"
+                autocomplete="off" />
             <div class="modal-buttons">
                 <button id="deleteQuestionBtn" class="delete-btn" aria-label="Ջնջել հարցը">Ջնջել Հարցը</button>
                 <button id="saveQuestionBtn" class="save-btn" aria-label="Պահպանել հարցը">Պահպանել</button>
@@ -457,31 +838,251 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal for Adding Question -->
     <div id="addModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
         <div class="modal-content" role="document">
             <h2 id="addModalTitle">Ավելացնել Նոր Հարց</h2>
-            <input id="addQuestionInput" type="text" placeholder="Ներմուծեք հարցը (օր․՝ 7 + 3)" aria-label="Նոր հարց" autocomplete="off" />
+            <input id="addQuestionInput" type="text" placeholder="Ներմուծեք հարցը (օր․՝ 7 + 3)" aria-label="Նոր հարց"
+                autocomplete="off" />
             <div class="modal-buttons">
                 <button id="addQuestionBtn" class="save-btn" aria-label="Ավելացնել">Ավելացնել</button>
                 <button id="closeAddModalBtn" class="close-btn" aria-label="Չեղարկել">Չեղարկել</button>
             </div>
         </div>
     </div>
-    
+
+    <!-- Millionaire Add Question Modal -->
+    <div id="addMillionaireModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="addMillionaireModalTitle">
+        <div class="modal-content" role="document">
+            <h2 id="addMillionaireModalTitle">Ավելացնել Նոր Հարց</h2>
+            <input id="addMillionaireQuestionInput" type="text" placeholder="Հարց" autocomplete="off" />
+
+            <div class="option-input-container">
+                <span class="option-label">ա)</span>
+                <input class="option-input" id="optionAInput" type="text" placeholder="Ա տարբերակ" autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">բ)</span>
+                <input class="option-input" id="optionBInput" type="text" placeholder="Բ տարբերակ" autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">գ)</span>
+                <input class="option-input" id="optionCInput" type="text" placeholder="Գ տարբերակ" autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">դ)</span>
+                <input class="option-input" id="optionDInput" type="text" placeholder="Դ տարբերակ" autocomplete="off" />
+            </div>
+
+            <div class="correct-option">
+                <label for="correctOptionSelect">Ճիշտ պատասխանը՝</label>
+                <select id="correctOptionSelect">
+                    <option value="0">ա</option>
+                    <option value="1">բ</option>
+                    <option value="2">գ</option>
+                    <option value="3">դ</option>
+                </select>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="addMillionaireQuestionBtn" class="save-btn" aria-label="Ավելացնել">Ավելացնել</button>
+                <button id="closeAddMillionaireModalBtn" class="close-btn" aria-label="Չեղարկել">Չեղարկել</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Millionaire Edit Question Modal -->
+    <div id="editMillionaireModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="editMillionaireModalTitle">
+        <div class="modal-content" role="document">
+            <h2 id="editMillionaireModalTitle">Խմբագրել / Ջնջել Հարց</h2>
+            <select id="millionaireQuestionSelect" aria-label="Ընտրել հարց"></select>
+
+            <input id="editMillionaireQuestionInput" type="text" placeholder="Հարց" autocomplete="off" />
+
+            <div class="option-input-container">
+                <span class="option-label">ա)</span>
+                <input class="option-input" id="editOptionAInput" type="text" placeholder="Ա տարբերակ"
+                    autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">բ)</span>
+                <input class="option-input" id="editOptionBInput" type="text" placeholder="Բ տարբերակ"
+                    autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">գ)</span>
+                <input class="option-input" id="editOptionCInput" type="text" placeholder="Գ տարբերակ"
+                    autocomplete="off" />
+            </div>
+            <div class="option-input-container">
+                <span class="option-label">դ)</span>
+                <input class="option-input" id="editOptionDInput" type="text" placeholder="Դ տարբերակ"
+                    autocomplete="off" />
+            </div>
+
+            <div class="correct-option">
+                <label for="editCorrectOptionSelect">Ճիշտ պատասխանը՝</label>
+                <select id="editCorrectOptionSelect">
+                    <option value="0">ա</option>
+                    <option value="1">բ</option>
+                    <option value="2">գ</option>
+                    <option value="3">դ</option>
+                </select>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="deleteMillionaireQuestionBtn" class="delete-btn" aria-label="Ջնջել հարցը">Ջնջել
+                    Հարցը</button>
+                <button id="saveMillionaireQuestionBtn" class="save-btn" aria-label="Պահպանել հարցը">Պահպանել</button>
+                <button id="closeEditMillionaireModalBtn" class="close-btn" aria-label="Փակել մոդալը">Փակել</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Բազային հարցեր
         let questions = [
-            { question: "5 + 7"},
-            { question: "12 - 4"},
-            { question: "3 × 6"},
-            { question: "20 ÷ 4"},
-            { question: "8 + 9"},
-            { question: "15 - 7"},
-            { question: "4 × 5"},
-            { question: "18 ÷ 3"}
+            { question: "5 + 7" },
+            { question: "12 - 4" },
+            { question: "3 × 6" },
+            { question: "20 ÷ 4" },
+            { question: "8 + 9" },
+            { question: "15 - 7" },
+            { question: "4 × 5" },
+            { question: "18 ÷ 3" }
         ];
+
+        // Millionaire game questions (20 levels with increasing difficulty)
+        let millionaireQuestions = [
+            // Level 1-5 (Easy)
+            {
+                question: "Որքան է 5 + 7?",
+                options: ["10", "12", "14", "11"],
+                answer: 1,
+                points: 10
+            },
+            {
+                question: "Որքան է 12 - 4?",
+                options: ["6", "7", "8", "9"],
+                answer: 2,
+                points: 20
+            },
+            {
+                question: "Որքան է 3 × 6?",
+                options: ["12", "15", "18", "21"],
+                answer: 2,
+                points: 30
+            },
+            {
+                question: "Որքան է 20 ÷ 4?",
+                options: ["3", "4", "5", "6"],
+                answer: 2,
+                points: 40
+            },
+            {
+                question: "Որքան է 8 + 9?",
+                options: ["15", "16", "17", "18"],
+                answer: 2,
+                points: 50
+            },
+            // Level 6-10 (Medium)
+            {
+                question: "Որքան է 15 - 7?",
+                options: ["6", "7", "8", "9"],
+                answer: 2,
+                points: 60
+            },
+            {
+                question: "Որքան է 4 × 5?",
+                options: ["15", "18", "20", "25"],
+                answer: 2,
+                points: 70
+            },
+            {
+                question: "Որքան է 18 ÷ 3?",
+                options: ["4", "5", "6", "7"],
+                answer: 2,
+                points: 80
+            },
+            {
+                question: "Որքան է 25 + 17?",
+                options: ["40", "42", "44", "45"],
+                answer: 1,
+                points: 90
+            },
+            {
+                question: "Որքան է 36 - 19?",
+                options: ["15", "16", "17", "18"],
+                answer: 2,
+                points: 100
+            },
+            // Level 11-15 (Hard)
+            {
+                question: "Որքան է 7 × 8?",
+                options: ["48", "54", "56", "64"],
+                answer: 2,
+                points: 110
+            },
+            {
+                question: "Որքան է 72 ÷ 9?",
+                options: ["7", "8", "9", "10"],
+                answer: 1,
+                points: 120
+            },
+            {
+                question: "Որքան է 15 × 4?",
+                options: ["45", "50", "60", "75"],
+                answer: 2,
+                points: 130
+            },
+            {
+                question: "Որքան է 96 ÷ 12?",
+                options: ["6", "7", "8", "9"],
+                answer: 2,
+                points: 140
+            },
+            {
+                question: "Որքան է 23 + 47?",
+                options: ["60", "65", "70", "75"],
+                answer: 2,
+                points: 150
+            },
+            // Level 16-20 (Very Hard)
+            {
+                question: "Որքան է 15 × 6?",
+                options: ["75", "80", "90", "100"],
+                answer: 2,
+                points: 160
+            },
+            {
+                question: "Որքան է 144 ÷ 12?",
+                options: ["10", "11", "12", "13"],
+                answer: 2,
+                points: 170
+            },
+            {
+                question: "Որքան է 17 × 5?",
+                options: ["75", "80", "85", "90"],
+                answer: 2,
+                points: 180
+            },
+            {
+                question: "Որքան է 225 ÷ 15?",
+                options: ["12", "13", "14", "15"],
+                answer: 3,
+                points: 190
+            },
+            {
+                question: "Որքան է 34 × 6?",
+                options: ["184", "194", "204", "214"],
+                answer: 2,
+                points: 200
+            }
+        ];
+
         const canvas = document.getElementById("wheel");
         const ctx = canvas.getContext("2d");
         const spinBtn = document.getElementById("spin");
@@ -499,8 +1100,40 @@
         const addBtn = document.getElementById("btn-add");
         const editBtn = document.getElementById("btn-edit");
         const mathSymbolsContainer = document.getElementById("mathSymbols");
-        
-        // Անիվի պարամետրեր
+
+        // Millionaire game elements
+        const millionaireGame = document.getElementById("millionaireGame");
+        const levelDisplay = document.getElementById("levelDisplay");
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        const millionaireQuestion = document.getElementById("millionaireQuestion");
+        const optionsContainer = document.getElementById("optionsContainer");
+        const nextLevelBtn = document.getElementById("nextLevelBtn");
+        const restartBtn = document.getElementById("restartBtn");
+        const progressBar = document.getElementById("progressBar");
+
+        // Millionaire modals elements
+        const addMillionaireModal = document.getElementById("addMillionaireModal");
+        const editMillionaireModal = document.getElementById("editMillionaireModal");
+        const addMillionaireQuestionInput = document.getElementById("addMillionaireQuestionInput");
+        const optionAInput = document.getElementById("optionAInput");
+        const optionBInput = document.getElementById("optionBInput");
+        const optionCInput = document.getElementById("optionCInput");
+        const optionDInput = document.getElementById("optionDInput");
+        const correctOptionSelect = document.getElementById("correctOptionSelect");
+        const addMillionaireQuestionBtn = document.getElementById("addMillionaireQuestionBtn");
+        const closeAddMillionaireModalBtn = document.getElementById("closeAddMillionaireModalBtn");
+        const millionaireQuestionSelect = document.getElementById("millionaireQuestionSelect");
+        const editMillionaireQuestionInput = document.getElementById("editMillionaireQuestionInput");
+        const editOptionAInput = document.getElementById("editOptionAInput");
+        const editOptionBInput = document.getElementById("editOptionBInput");
+        const editOptionCInput = document.getElementById("editOptionCInput");
+        const editOptionDInput = document.getElementById("editOptionDInput");
+        const editCorrectOptionSelect = document.getElementById("editCorrectOptionSelect");
+        const saveMillionaireQuestionBtn = document.getElementById("saveMillionaireQuestionBtn");
+        const deleteMillionaireQuestionBtn = document.getElementById("deleteMillionaireQuestionBtn");
+        const closeEditMillionaireModalBtn = document.getElementById("closeEditMillionaireModalBtn");
+
+        // Wheel parameters
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
         const radius = 200;
@@ -514,26 +1147,31 @@
             "#079992",
             "#60a3bc",
         ];
-        
-        // Անիվի պտտման փոփոխականներ
+
+        // Wheel spinning variables
         let currentAngle = 0;
         let spinTime = 0;
         let spinTimeTotal = 0;
         let spinAngleStart = 0;
-        
-        // Կենտրոնի պտտվող նշաններ
+
+        // Millionaire game variables
+        let currentLevel = 0;
+        let totalScore = 0;
+        let selectedOption = null;
+
+        // Center symbols animation
         let symbolAngle = 0;
         const symbols = ["+", "-", "×", "÷", "=", "≠", "≈", "√", "π", "∞"];
         const symbolColors = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c", "#d35400", "#34495e"];
-        
+
         // Create floating math symbols background
         function createMathSymbols() {
             const mathSymbols = ["+", "-", "×", "÷", "=", "≠", "≈", "√", "π", "∞", "∫", "∑", "∆", "∏", "∈", "∉", "∩", "∪"];
             const colors = ["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c"];
-            
+
             // Clear existing symbols
             mathSymbolsContainer.innerHTML = '';
-            
+
             // Create new symbols
             for (let i = 0; i < 50; i++) {
                 const symbol = document.createElement("div");
@@ -547,21 +1185,21 @@
                 mathSymbolsContainer.appendChild(symbol);
             }
         }
-        
+
         function drawWheel() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const sliceAngle = (2 * Math.PI) / questions.length;
-            
+
             // Draw gradient background
             const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
             gradient.addColorStop(0, "rgba(255,255,255,0.8)");
             gradient.addColorStop(1, "rgba(230,240,255,0.5)");
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
+
             for (let i = 0; i < questions.length; i++) {
                 const angle = currentAngle + i * sliceAngle;
-                
+
                 // Create gradient for each segment
                 const segmentGradient = ctx.createLinearGradient(
                     centerX + Math.cos(angle) * radius,
@@ -571,7 +1209,7 @@
                 );
                 segmentGradient.addColorStop(0, colors[i % colors.length]);
                 segmentGradient.addColorStop(1, lightenColor(colors[i % colors.length], 20));
-                
+
                 ctx.fillStyle = segmentGradient;
                 ctx.beginPath();
                 ctx.moveTo(centerX, centerY);
@@ -581,8 +1219,8 @@
                 ctx.strokeStyle = "#fff";
                 ctx.lineWidth = 3;
                 ctx.stroke();
-                
-                // Տեքստի բարելավված դիրքավորում
+
+                // Text positioning
                 ctx.save();
                 ctx.fillStyle = "#fff";
                 ctx.font = "bold 18px 'Segoe UI', Arial, sans-serif";
@@ -592,18 +1230,18 @@
                 ctx.textBaseline = "middle";
                 const text = questions[i].question;
                 const maxWidth = radius - 40;
-                
-                // Կրճատում, եթե տեքստը երկար է
+
+                // Shorten text if too long
                 let displayText = text;
                 while (ctx.measureText(displayText).width > maxWidth && displayText.length > 3) {
                     displayText = displayText.slice(0, -1);
                 }
                 if (displayText !== text) displayText += "...";
-                
+
                 ctx.fillText(displayText, radius - 30, 0);
                 ctx.restore();
             }
-            
+
             // Draw center circle
             ctx.beginPath();
             ctx.arc(centerX, centerY, 80, 0, Math.PI * 2);
@@ -612,11 +1250,11 @@
             ctx.strokeStyle = "rgba(52, 152, 219, 0.7)";
             ctx.lineWidth = 8;
             ctx.stroke();
-            
-            // Կենտրոնի նշանները
+
+            // Draw center symbols
             drawCenterSymbols();
         }
-        
+
         function lightenColor(color, percent) {
             const num = parseInt(color.replace("#", ""), 16),
                 amt = Math.round(2.55 * percent),
@@ -630,23 +1268,23 @@
                 (B < 255 ? B < 1 ? 0 : B : 255)
             ).toString(16).slice(1);
         }
-        
+
         function drawCenterSymbols() {
             ctx.save();
             ctx.translate(centerX, centerY);
             const symbolRadius = 60;
             const symbolFontSize = 24;
-            
+
             for (let i = 0; i < symbols.length; i++) {
                 const angle = symbolAngle + (i * (2 * Math.PI)) / symbols.length;
                 const x = symbolRadius * Math.cos(angle);
                 const y = symbolRadius * Math.sin(angle);
-                
+
                 ctx.font = `bold ${symbolFontSize}px 'Segoe UI', Arial, sans-serif`;
                 ctx.fillStyle = symbolColors[i % symbolColors.length];
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                
+
                 // Add pulsing animation to symbols
                 const scale = 1 + Math.sin(Date.now() / 300 + i) * 0.1;
                 ctx.save();
@@ -655,73 +1293,173 @@
                 ctx.fillText(symbols[i], 0, 0);
                 ctx.restore();
             }
-            
+
             ctx.restore();
             symbolAngle += 0.01;
         }
-        
+
         function easeOut(t, b, c, d) {
             const ts = (t /= d) * t;
             const tc = ts * t;
             return b + c * (tc + -3 * ts + 3 * t);
         }
-        
+
         function rotateWheel() {
             spinTime += 30;
             if (spinTime >= spinTimeTotal) {
                 stopRotateWheel();
                 return;
             }
-            
+
             const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
             currentAngle += (spinAngle * Math.PI) / 180;
             drawWheel();
             requestAnimationFrame(rotateWheel);
         }
-        
+
         function stopRotateWheel() {
             spinBtn.disabled = false;
-            
-            // Ընտրել հաղթող հատվածը
+
+            // Determine winning segment
             const degrees = (currentAngle * 180) / Math.PI + 90;
             const arcd = 360 / questions.length;
             const index = Math.floor(((360 - (degrees % 360)) % 360) / arcd);
             const selected = questions[index];
-            
+
             // Animate result appearance
             resultDiv.style.animation = "none";
             resultDiv.offsetHeight; // Trigger reflow
             resultDiv.style.animation = "fadeIn 0.8s ease forwards";
-            
+
             resultDiv.innerHTML = `<strong>Հարցը:</strong> ${selected.question}`;
         }
-        
+
         function startSpin() {
             if (questions.length < 2) {
                 alert("Խնդրում եմ ավելացրեք առնվազն 2 հարց պտտման համար:");
                 return;
             }
-            
+
             spinBtn.disabled = true;
             resultDiv.textContent = "";
-            spinAngleStart = Math.floor(Math.random() * 360) + 720; // 2-3 պտույտ
+            spinAngleStart = Math.floor(Math.random() * 360) + 720; // 2-3 full rotations
             spinTime = 0;
             spinTimeTotal = Math.floor(Math.random() * 2000) + 3500;
             rotateWheel();
         }
-        
-        // Modal-ի գործառույթներ
+
+        // Millionaire game functions
+        function startMillionaireGame() {
+            document.getElementById("game").style.display = "none";
+            millionaireGame.style.display = "flex";
+            currentLevel = 0;
+            totalScore = 0;
+            loadLevel();
+        }
+
+        function quitMillionaireGame() {
+            millionaireGame.style.display = "none";
+            document.getElementById("game").style.display = "none";
+        }
+
+        function loadLevel() {
+            if (currentLevel >= millionaireQuestions.length) {
+                // Game completed
+                millionaireQuestion.innerHTML = `<strong>Շնորհավորում եմ!</strong><br>Դուք հավաքել եք ${totalScore} միավոր`;
+                optionsContainer.innerHTML = "";
+                nextLevelBtn.style.display = "none";
+                restartBtn.style.display = "block";
+                progressBar.style.width = "100%";
+                return;
+            }
+
+            const question = millionaireQuestions[currentLevel];
+            levelDisplay.textContent = `Մակարդակ ${currentLevel + 1}`;
+            scoreDisplay.textContent = `${totalScore} միավոր`;
+            millionaireQuestion.textContent = question.question;
+
+            // Update progress bar
+            progressBar.style.width = `${(currentLevel / millionaireQuestions.length) * 100}%`;
+
+            // Clear previous options
+            optionsContainer.innerHTML = "";
+
+            // Add new options
+            const letters = ['ա', 'բ', 'գ', 'դ'];
+            question.options.forEach((option, index) => {
+                const optionBtn = document.createElement("button");
+                optionBtn.className = "option-btn";
+
+                const letterSpan = document.createElement("span");
+                letterSpan.className = "option-letter";
+                letterSpan.textContent = letters[index] + ")";
+
+                optionBtn.appendChild(letterSpan);
+                optionBtn.appendChild(document.createTextNode(" " + option));
+
+                optionBtn.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionBtn);
+            });
+
+            // Reset buttons state
+            nextLevelBtn.style.display = "block";
+            nextLevelBtn.disabled = true;
+            restartBtn.style.display = "none";
+            selectedOption = null;
+        }
+
+        function selectOption(index) {
+            const question = millionaireQuestions[currentLevel];
+            const options = document.querySelectorAll(".option-btn");
+
+            // Disable all options after selection
+            options.forEach(opt => opt.disabled = true);
+
+            // Highlight selected option
+            if (index === question.answer) {
+                // Correct answer - green
+                options[index].style.background = "#2ecc71";
+                totalScore += question.points;
+                scoreDisplay.textContent = `${totalScore} միավոր`;
+
+                // Enable next level button
+                nextLevelBtn.disabled = false;
+                restartBtn.style.display = "none";
+            } else {
+                // Wrong answer - red
+                options[index].style.background = "#e74c3c";
+                // Highlight correct answer in green
+                options[question.answer].style.background = "#2ecc71";
+
+                // Show restart button and hide next level button
+                nextLevelBtn.style.display = "none";
+                restartBtn.style.display = "block";
+            }
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            loadLevel();
+        }
+
+        function restartGame() {
+            currentLevel = 0;
+            totalScore = 0;
+            loadLevel();
+        }
+
+        // Modal functions for question management
         function openEditModal() {
             editModal.style.display = "flex";
             editModal.setAttribute("aria-hidden", "false");
             populateQuestionSelect();
         }
-        
+
         function closeEditModal() {
             editModal.style.display = "none";
             editModal.setAttribute("aria-hidden", "true");
         }
-        
+
         function openAddModal() {
             addModal.style.display = "flex";
             addModal.setAttribute("aria-hidden", "false");
@@ -730,12 +1468,12 @@
                 addQuestionInput.focus();
             }, 100);
         }
-        
+
         function closeAddModal() {
             addModal.style.display = "none";
             addModal.setAttribute("aria-hidden", "true");
         }
-        
+
         function populateQuestionSelect() {
             questionSelect.innerHTML = "";
             questions.forEach((q, i) => {
@@ -744,7 +1482,7 @@
                 option.textContent = q.question;
                 questionSelect.appendChild(option);
             });
-            
+
             if (questions.length > 0) {
                 questionSelect.selectedIndex = 0;
                 editQuestionInput.value = questions[0].question;
@@ -752,105 +1490,251 @@
                 editQuestionInput.value = "";
             }
         }
-        
+
+        // Event listeners
         questionSelect.addEventListener("change", () => {
             const idx = questionSelect.value;
             editQuestionInput.value = questions[idx] ? questions[idx].question : "";
         });
-        
+
         saveQuestionBtn.addEventListener("click", () => {
             const idx = questionSelect.value;
             const newQuestion = editQuestionInput.value.trim();
-            
+
             if (!newQuestion) {
                 alert("Հարցը չի կարող լինել դատարկ:");
                 return;
             }
-            
+
             if (questions[idx]) {
                 questions[idx].question = newQuestion;
             }
-            
+
             drawWheel();
             closeEditModal();
         });
-        
+
         deleteQuestionBtn.addEventListener("click", () => {
             const idx = questionSelect.value;
-            
+
             if (questions.length <= 2) {
                 alert("Անվտանգության համար անհրաժեշտ է գոնե 2 հարց:");
                 return;
             }
-            
+
             if (confirm(`Ջնջե՞լ հարցը՝ "${questions[idx].question}"`)) {
                 questions.splice(idx, 1);
                 populateQuestionSelect();
                 drawWheel();
-                
+
                 if (questions.length === 0) {
                     closeEditModal();
                 }
             }
         });
-        
+
         addQuestionBtn.addEventListener("click", () => {
             const newQuestion = addQuestionInput.value.trim();
-            
+
             if (!newQuestion) {
                 alert("Հարցը չի կարող լինել դատարկ:");
                 return;
             }
-            
+
             questions.push({ question: newQuestion });
             drawWheel();
             closeAddModal();
             addQuestionInput.value = "";
         });
-        
+
         addQuestionInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 addQuestionBtn.click();
             }
         });
-        
+
         editQuestionInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 saveQuestionBtn.click();
             }
         });
-        
-        closeEditModalBtn.addEventListener("click", closeEditModal);
-        closeAddModalBtn.addEventListener("click", closeAddModal);
-        
-        // Update button listeners to use modals
-        addBtn.addEventListener("click", openAddModal);
-        editBtn.addEventListener("click", openEditModal);
-        spinBtn.addEventListener("click", startSpin);
-        
-        // Create floating math symbols background
-        createMathSymbols();
-        
-        // Refresh background symbols periodically
-        setInterval(createMathSymbols, 20000);
-        
-        // Նախնական նկարչություն
-        drawWheel();
-        
-        // Հիմնական խաղի ցուցադրում
+
+        // Millionaire modal functions
+        function openAddMillionaireModal() {
+            addMillionaireModal.style.display = "flex";
+            addMillionaireModal.setAttribute("aria-hidden", "false");
+
+            // Clear inputs
+            addMillionaireQuestionInput.value = "";
+            optionAInput.value = "";
+            optionBInput.value = "";
+            optionCInput.value = "";
+            optionDInput.value = "";
+            correctOptionSelect.selectedIndex = 0;
+
+            setTimeout(() => {
+                addMillionaireQuestionInput.focus();
+            }, 100);
+        }
+
+        function closeAddMillionaireModal() {
+            addMillionaireModal.style.display = "none";
+            addMillionaireModal.setAttribute("aria-hidden", "true");
+        }
+
+        function openEditMillionaireModal() {
+            editMillionaireModal.style.display = "flex";
+            editMillionaireModal.setAttribute("aria-hidden", "false");
+            populateMillionaireQuestionSelect();
+        }
+
+        function closeEditMillionaireModal() {
+            editMillionaireModal.style.display = "none";
+            editMillionaireModal.setAttribute("aria-hidden", "true");
+        }
+
+        function populateMillionaireQuestionSelect() {
+            millionaireQuestionSelect.innerHTML = "";
+            millionaireQuestions.forEach((q, i) => {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = q.question;
+                millionaireQuestionSelect.appendChild(option);
+            });
+
+            if (millionaireQuestions.length > 0) {
+                millionaireQuestionSelect.selectedIndex = 0;
+                updateEditMillionaireForm(0);
+            }
+        }
+
+        function updateEditMillionaireForm(index) {
+            if (index >= 0 && index < millionaireQuestions.length) {
+                const question = millionaireQuestions[index];
+                editMillionaireQuestionInput.value = question.question;
+                editOptionAInput.value = question.options[0];
+                editOptionBInput.value = question.options[1];
+                editOptionCInput.value = question.options[2];
+                editOptionDInput.value = question.options[3];
+                editCorrectOptionSelect.value = question.answer;
+            }
+        }
+
+        millionaireQuestionSelect.addEventListener("change", () => {
+            const idx = millionaireQuestionSelect.value;
+            updateEditMillionaireForm(idx);
+        });
+
+        addMillionaireQuestionBtn.addEventListener("click", () => {
+            const question = addMillionaireQuestionInput.value.trim();
+            const optionA = optionAInput.value.trim();
+            const optionB = optionBInput.value.trim();
+            const optionC = optionCInput.value.trim();
+            const optionD = optionDInput.value.trim();
+            const correctAnswer = parseInt(correctOptionSelect.value);
+
+            if (!question || !optionA || !optionB || !optionC || !optionD) {
+                alert("Խնդրում եմ լրացրեք բոլոր դաշտերը:");
+                return;
+            }
+
+            const newQuestion = {
+                question: question,
+                options: [optionA, optionB, optionC, optionD],
+                answer: correctAnswer,
+                points: (millionaireQuestions.length + 1) * 10
+            };
+
+            millionaireQuestions.push(newQuestion);
+            closeAddMillionaireModal();
+
+            // If game is not started, start it
+            if (millionaireGame.style.display === "none") {
+                startMillionaireGame();
+            }
+        });
+
+        saveMillionaireQuestionBtn.addEventListener("click", () => {
+            const idx = millionaireQuestionSelect.value;
+            const question = editMillionaireQuestionInput.value.trim();
+            const optionA = editOptionAInput.value.trim();
+            const optionB = editOptionBInput.value.trim();
+            const optionC = editOptionCInput.value.trim();
+            const optionD = editOptionDInput.value.trim();
+            const correctAnswer = parseInt(editCorrectOptionSelect.value);
+
+            if (!question || !optionA || !optionB || !optionC || !optionD) {
+                alert("Խնդրում եմ լրացրեք բոլոր դաշտերը:");
+                return;
+            }
+
+            if (millionaireQuestions[idx]) {
+                millionaireQuestions[idx].question = question;
+                millionaireQuestions[idx].options = [optionA, optionB, optionC, optionD];
+                millionaireQuestions[idx].answer = correctAnswer;
+            }
+
+            closeEditMillionaireModal();
+
+            // Reload current level if game is in progress
+            if (millionaireGame.style.display === "flex") {
+                loadLevel();
+            }
+        });
+
+        deleteMillionaireQuestionBtn.addEventListener("click", () => {
+            const idx = millionaireQuestionSelect.value;
+
+            if (millionaireQuestions.length <= 2) {
+                alert("Անվտանգության համար անհրաժեշտ է գոնե 2 հարց:");
+                return;
+            }
+
+            if (confirm(`Ջնջե՞լ հարցը՝ "${millionaireQuestions[idx].question}"`)) {
+                millionaireQuestions.splice(idx, 1);
+                populateMillionaireQuestionSelect();
+
+                if (millionaireQuestions.length === 0) {
+                    closeEditMillionaireModal();
+                }
+            }
+        });
+
+        // Initialize the game
         function startGame() {
+            millionaireGame.style.display = "none";
             document.getElementById("game").style.display = "flex";
             document.getElementById("game").style.animation = "fadeIn 1s ease forwards";
         }
-        
+
         // Keep the wheel animation going even when not spinning
         function animateWheel() {
             drawWheel();
             requestAnimationFrame(animateWheel);
         }
-        
+
+        // Set up event listeners
+        closeEditModalBtn.addEventListener("click", closeEditModal);
+        closeAddModalBtn.addEventListener("click", closeAddModal);
+        closeAddMillionaireModalBtn.addEventListener("click", closeAddMillionaireModal);
+        closeEditMillionaireModalBtn.addEventListener("click", closeEditMillionaireModal);
+
+        addBtn.addEventListener("click", openAddModal);
+        editBtn.addEventListener("click", openEditModal);
+        spinBtn.addEventListener("click", startSpin);
+
+        // Create floating math symbols background
+        createMathSymbols();
+
+        // Refresh background symbols periodically
+        setInterval(createMathSymbols, 20000);
+
+        // Initial drawing
+        drawWheel();
+
         // Start the continuous animation
         animateWheel();
     </script>
 </body>
+
 </html>
